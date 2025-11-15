@@ -1,0 +1,28 @@
+package com.example.reactivedemo.controller;
+
+import com.example.reactivedemo.model.Product;
+import com.example.reactivedemo.service.ProductService;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping
+    public Flux<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/{id}")
+    public Mono<Product> getProductById(@PathVariable String id) {
+        return productService.getProductById(id);
+    }
+}
